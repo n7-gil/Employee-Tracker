@@ -1,31 +1,41 @@
-// // const mysql = require("mysql2");
+import mysql2 from "mysql2";
 
 import inquirer from "inquirer";
 
-import * as fs from "fs";
+// const connection = mysql2.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   database: "employeeTracker_db",
+// });
 
 const PORT = process.env.port || 3001;
 
-const questions = [
+const startApp = [
   {
     type: "list",
-    name: "add_department",
+    name: "app_start",
     message: "What would you like to do?",
     choices: [
+      "View All Departments",
+      "View All Roles",
+      "View All Employees",
       "Add Department",
       "Add Role",
       "Add Employee",
       "Update Employee Role",
     ],
   },
+];
+
+const appOptions = [
   {
     type: "input",
-    name: "department_name",
+    name: "add_department",
     message: "What is the name of the department you are adding?",
   },
   {
     type: "input",
-    name: "role_name",
+    name: "add_name",
     message: "What is the name of the role you are adding?",
   },
   {
@@ -60,8 +70,23 @@ const questions = [
   },
 ];
 
-async function startApp() {
-  await inquirer.prompt(questions).then((data) => {});
+async function getData() {
+  await inquirer.prompt(startApp).then((data) => {
+    console.log(data.app_start);
+    if (data.app_start === "View All Departments") {
+      getDepartments();
+    }
+  });
 }
 
-startApp();
+getData();
+function getDepartments() {
+  console.log("Running getDepartments");
+  connection.query(
+    "SELECT * FROM `department`",
+    function (err, results, fields) {
+      console.log(results); // results contains rows returned by server
+      console.log(fields); // fields contains extra meta data about results, if available
+    }
+  );
+}
