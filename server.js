@@ -1,28 +1,27 @@
 // // const mysql = require("mysql2");
-// const inquirer = require("inquirer");
+
 import inquirer from "inquirer";
-// const fs = require("fs");
+
 import * as fs from "fs";
 
 const PORT = process.env.port || 3001;
 
 const questions = [
   {
-    type: "checkbox",
+    type: "list",
     name: "add_department",
     message: "What would you like to do?",
-    choices: ["Add Department"],
+    choices: [
+      "Add Department",
+      "Add Role",
+      "Add Employee",
+      "Update Employee Role",
+    ],
   },
   {
     type: "input",
     name: "department_name",
     message: "What is the name of the department you are adding?",
-  },
-  {
-    type: "checkbox",
-    name: "add_role",
-    message: "What would you like to do?",
-    choices: ["Add Role"],
   },
   {
     type: "input",
@@ -38,12 +37,6 @@ const questions = [
     type: "input",
     name: "role_department",
     message: "Which department does the role belong to?",
-  },
-  {
-    type: "checkbox",
-    name: "add_employee",
-    message: "What would you like to do?",
-    choices: ["Add Employee"],
   },
   {
     type: "input",
@@ -64,18 +57,6 @@ const questions = [
     type: "input",
     name: "employee_manager",
     message: "Who is the employee's manager?",
-  },
-  {
-    type: "checkbox",
-    name: "update_role",
-    message: "What would you like to do?",
-    choices: ["Update Employee Role"],
-  },
-  {
-    type: "list",
-    name: "employee_list",
-    message: "Which employee do you want to update?",
-    choices: [],
   },
 ];
 
