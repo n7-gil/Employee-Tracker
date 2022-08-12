@@ -1,8 +1,13 @@
+// mysql2 npm
 import mysql2 from "mysql2";
-// import cTable from "console.table";
+
+// inquirer npm
 import inquirer from "inquirer";
+
+// database import from server.js
 import db from "./server.js";
 
+// opens a list with first set of options that are prompted when the app is ran
 const startApp = [
   {
     type: "list",
@@ -20,6 +25,7 @@ const startApp = [
   },
 ];
 
+// messages that appear when the specific option was selected
 const appOptions = [
   {
     type: "input",
@@ -63,6 +69,7 @@ const appOptions = [
   },
 ];
 
+// if data === specific option, another function is then ran to gather data
 async function getData() {
   await inquirer.prompt(startApp).then((data) => {
     console.log(data.app_start);
@@ -86,9 +93,9 @@ async function getData() {
   });
 }
 
+// function that is ran if user selects "View all departments"
 getData();
 function getDepartments() {
-  // console.log(db);
   console.log("Running getDepartments");
   db.query("SELECT * FROM department", function (err, results) {
     if (err) {
@@ -100,6 +107,7 @@ function getDepartments() {
   });
 }
 
+// function that is ran if user selects "View all roles"
 function getRoles() {
   console.log("Running getRoles");
   db.query("SELECT * FROM roles", function (err, results) {
@@ -112,6 +120,7 @@ function getRoles() {
   });
 }
 
+// function that is ran if user selects "View all employees"
 function getEmployees() {
   console.log("Running getEmployees");
   db.query("SELECT * FROM employee", function (err, results) {
@@ -123,6 +132,8 @@ function getEmployees() {
     }
   });
 }
+
+// function that is ran if user selects "Add department"
 
 // function addDepartment(departmentName) {
 //   console.log("Running addDepartment");

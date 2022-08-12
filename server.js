@@ -1,5 +1,6 @@
 import mysql from "mysql2";
 
+// connection to employeeTracker_db created by sql
 const db = mysql.createConnection(
   {
     host: "localhost",
@@ -10,17 +11,9 @@ const db = mysql.createConnection(
   console.log(`Connected to the employeeTracker_db database.`)
 );
 
-// db.connect(function (err) {
-//   if (err) {
-//     return console.error("error: " + err.message);
-//   }
-
-//   console.log("Connected to the MySQL server.");
-// });
-
-// Query database
 db.query("USE employeeTracker_db", function (err, results) {
-  console.log("success!");
+  // console.log("success!");
 });
 
+// exporting the database, allowing import to index.js
 export default db;
