@@ -1,6 +1,7 @@
 import mysql2 from "mysql2";
-
+// import cTable from "console.table";
 import inquirer from "inquirer";
+import db from "./server.js";
 
 const startApp = [
   {
@@ -79,39 +80,61 @@ async function getData() {
       addEmployee();
     } else if (data.app_start === "Update Employee Role") {
       updateRole();
+    } else {
+      console.log(err);
     }
   });
 }
 
 getData();
 function getDepartments() {
+  // console.log(db);
   console.log("Running getDepartments");
-  connection.query(
-    "SELECT * FROM `department`",
-    function (err, results, fields) {
-      console.log(results); // results contains rows returned by server
-      console.log(fields); // fields contains extra meta data about results, if available
+  db.query("SELECT * FROM department", function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.table(results);
+      getData();
     }
-  );
-}
-
-getData();
-function getRoles() {
-  console.log("Running getRoles");
-  connection.query("SELECT * FROM `roles`", function (err, results, fields) {
-    console.log(results); // results contains rows returned by server
-    console.log(fields); // fields contains extra meta data about results, if available
   });
 }
 
-getData();
+function getRoles() {
+  console.log("Running getRoles");
+  db.query("SELECT * FROM roles", function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.table(results);
+      getData();
+    }
+  });
+}
+
 function getEmployees() {
   console.log("Running getEmployees");
-  connection.query(
-    "SELECT * FROM `employees`",
-    function (err, results, fields) {
-      console.log(results); // results contains rows returned by server
-      console.log(fields); // fields contains extra meta data about results, if available
+  db.query("SELECT * FROM employee", function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.table(results);
+      getData();
     }
-  );
+  });
 }
+
+// function addDepartment(departmentName) {
+//   console.log("Running addDepartment");
+//   db.query(
+//     "INSERT INTO department (department_name) VALUES (?)",
+//     [departmentName],
+//     (err, results) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.table(results), getData();
+//       }
+//     }
+//   );
+// }
